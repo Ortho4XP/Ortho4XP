@@ -17,11 +17,13 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/artesim"><img src="https://avatars.githubusercontent.com/u/38612405?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Artesim</b></sub></a><br /><a href="https://github.com/Ortho4XP/Ortho4XP/commits?author=artesim" title="Code">💻</a> <a href="#ideas-artesim" title="Ideas, Planning, & Feedback">🤔</a> <a href="#maintenance-artesim" title="Maintenance">🚧</a></td>
     <td align="center"><a href="https://github.com/OldSubSailor"><img src="https://avatars.githubusercontent.com/u/54075170?v=4?s=100" width="100px;" alt=""/><br /><sub><b>OldSubSailor</b></sub></a><br /><a href="#ideas-OldSubSailor" title="Ideas, Planning, & Feedback">🤔</a></td>
     <td align="center"><a href="https://github.com/oscarpilote"><img src="https://avatars.githubusercontent.com/u/24352598?v=4?s=100" width="100px;" alt=""/><br /><sub><b>oscarpilote</b></sub></a><br /><a href="#ideas-oscarpilote" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/Ortho4XP/Ortho4XP/commits?author=oscarpilote" title="Code">💻</a> <a href="#design-oscarpilote" title="Design">🎨</a> <a href="#question-oscarpilote" title="Answering Questions">💬</a></td>
+    <td align="center"><a href="https://github.com/d41k4n"><img src="https://avatars.githubusercontent.com/u/6691087?v=4?s=100" width="100px;" alt=""/><br /><sub><b>d41k4n</b></sub></a><br /><a href="https://github.com/Ortho4XP/Ortho4XP/commits?author=d41k4n" title="Code">💻</a> <a href="#question-d41k4n" title="Answering Questions">💬</a></td>
+
   </tr>
 </table>
-
+deas
 <!-- markdownlint-restore -->
-<!-- prettier-ignore-end -->
+<!-- prettier-ignore-end -->deas
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
