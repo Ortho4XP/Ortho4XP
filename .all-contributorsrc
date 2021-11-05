@@ -33,7 +33,9 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/54075170?v=4",
       "profile": "https://github.com/OldSubSailor",
       "contributions": [
-        "ideas"
+        "ideas",
+        "question",
+        "bug"
       ]
     }
   ],
