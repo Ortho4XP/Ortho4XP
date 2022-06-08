@@ -30,7 +30,5 @@ jobs:
     - name: Install GDAL Python wrapper
       if: matrix.gdal
       run: poetry add gdal==3.4.1   # Python lib versions MUST be the same as the corresponding system lib versions
-    - name: Lint
-      run: poetry run flake8 --exit-zero
     - name: Test
       run: poetry run pytest
