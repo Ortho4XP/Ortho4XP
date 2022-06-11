@@ -1,9 +1,8 @@
 # Install dependencies
-brew install python gdal spatialindex p7zip
+brew install python-tk@3.9 gdal spatialindex p7zip poetry
 
-# Install pyproj
-pip3 install cython
-pip3 install git+https://github.com/jswhit/pyproj.git
+# Setup python environment
+poetry install
 
-# Install other dependencies
-pip3 install numpy shapely rtree pillow requests
+# Install gdal
+poetry run pip3 install gdal

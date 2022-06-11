@@ -1,4 +1,5 @@
-from math import log, tan, pi, atan, exp, cos, sin, sqrt, atan2
+import functools
+from math import log, log2, tan, pi, atan, exp, cos, sin, sqrt, atan2, floor
 import pyproj
 
 earth_radius = 6378137
@@ -7,7 +8,7 @@ m_to_lat      = 1/lat_to_m
 def lon_to_m(lat):
     return lat_to_m*cos(pi*lat/180)
 def m_to_lon(lat):
-    return m_to_lat/cos(pi*lat/180) 
+    return m_to_lat/cos(pi*lat/180)
 
 def dist(A,B):
     # A=(lona,lata), B=(lonb,latb)
@@ -18,11 +19,14 @@ def dist(A,B):
 epsg={}
 epsg['4326']=pyproj.Proj(init='epsg:4326')
 epsg['3857']=pyproj.Proj(init='epsg:3857')
-    
+
 
 ##############################################################################
 def webmercator_pixel_size(lat,zoomlevel):
     return 2*pi*earth_radius*cos(pi*lat/180)/(2**(zoomlevel+8))
+
+def webmercator_zoomlevel(lat, pixel_size):
+    return floor(log2((2 * pi * earth_radius * cos(lat * pi / 180)) / pixel_size) - 8)
 ##############################################################################
 
 ##############################################################################
@@ -31,10 +35,11 @@ def transform(s_epsg, t_epsg, s_x, s_y):
 ##############################################################################
 
 ##############################################################################
+@functools.lru_cache(maxsize=2**16)
 def gtile_to_wgs84(til_x,til_y,zoomlevel):
     """
-    Returns the latitude and longitude of the top left corner of the tile 
-    (til_x,til_y) at zoom level zoomlevel, using Google's numbering of tiles 
+    Returns the latitude and longitude of the top left corner of the tile
+    (til_x,til_y) at zoom level zoomlevel, using Google's numbering of tiles
     (i.e. origin on top left of the earth map)
     """
     rat_x=(til_x/(2**(zoomlevel-1))-1)
@@ -45,8 +50,8 @@ def gtile_to_wgs84(til_x,til_y,zoomlevel):
 ##############################################################################
 
 ##############################################################################
-def wgs84_to_gtile(lat,lon,zoomlevel):                                          
-    rat_x=lon/180           
+def wgs84_to_gtile(lat,lon,zoomlevel):
+    rat_x=lon/180
     rat_y=log(tan((90+lat)*pi/360))/pi
     pix_x=round((rat_x+1)*(2**(zoomlevel+7)))
     pix_y=round((1-rat_y)*(2**(zoomlevel+7)))
@@ -56,8 +61,8 @@ def wgs84_to_gtile(lat,lon,zoomlevel):
 ##############################################################################
 
 ##############################################################################
-def wgs84_to_pix(lat,lon,zoomlevel):                                          
-    rat_x=lon/180           
+def wgs84_to_pix(lat,lon,zoomlevel):
+    rat_x=lon/180
     rat_y=log(tan((90+lat)*pi/360))/pi
     pix_x=round((rat_x+1)*(2**(zoomlevel+7)))
     pix_y=round((1-rat_y)*(2**(zoomlevel+7)))
@@ -76,11 +81,11 @@ def pix_to_wgs84(pix_x,pix_y,zoomlevel):
 ##############################################################################
 def gtile_to_quadkey(til_x,til_y,zoomlevel):
     """
-    Translates Google coding of tiles to Bing Quadkey coding. 
+    Translates Google coding of tiles to Bing Quadkey coding.
     """
     quadkey=""
     temp_x=til_x
-    temp_y=til_y    
+    temp_y=til_y
     for step in range(1,zoomlevel+1):
         size=2**(zoomlevel-step)
         a=temp_x//size
@@ -93,7 +98,7 @@ def gtile_to_quadkey(til_x,til_y,zoomlevel):
 
 ##############################################################################
 def wgs84_to_orthogrid(lat,lon,zoomlevel):
-    ratio_x=lon/180           
+    ratio_x=lon/180
     ratio_y=log(tan((90+lat)*pi/360))/pi
     mult=2**(zoomlevel-5)
     til_x=int((ratio_x+1)*mult)*16
@@ -102,11 +107,11 @@ def wgs84_to_orthogrid(lat,lon,zoomlevel):
 ##############################################################################
 
 ##############################################################################
-def st_coord(lat,lon,tex_x,tex_y,zoomlevel,provider_code):                        
+def st_coord(lat,lon,tex_x,tex_y,zoomlevel,provider_code):
     """
     ST coordinates of a point in a texture
     """
-    ratio_x=lon/180           
+    ratio_x=lon/180
     ratio_y=log(tan((90+lat)*pi/360))/pi
     mult=2**(zoomlevel-5)
     s=(ratio_x+1)*mult-(tex_x//16)
@@ -117,3 +122,16 @@ def st_coord(lat,lon,tex_x,tex_y,zoomlevel,provider_code):
     t = t if t<=1 else 1
     return (s,t)
 ##############################################################################
+
+
+# FIXME: tile_pix_origin() + latlon_to_tile_relative_pix() could be similar to either
+#      : wgs84_to_orthogrid() or st_coord(), I'm not sure
+def tile_pix_origin(lat, lon, zl):
+    tilxleft, tilytop = wgs84_to_gtile(lat + 1, lon, zl)
+    latmax, lonmin = gtile_to_wgs84(tilxleft, tilytop, zl)
+    return wgs84_to_pix(latmax, lonmin, zl)
+
+
+def latlon_to_tile_relative_pix(tile_origin, lat, lon, zl):
+    pix_x, pix_y = wgs84_to_pix(lat, lon, zl)
+    return pix_x - tile_origin[0], pix_y - tile_origin[1]
