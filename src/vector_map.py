@@ -218,7 +218,7 @@ def include_airports(vector_map, tile):
     runway_taxiway_apron_area = APT.encode_runways_taxiways_and_aprons(
         tile, airport_layer, dico_airports, vector_map, patches_list
     )
-    treated_area = ops.cascaded_union(
+    treated_area = ops.unary_union(
         [patches_area, runway_taxiway_apron_area]
     )
     APT.encode_hangars(tile, dico_airports, vector_map, patches_list)
@@ -964,7 +964,7 @@ def keep_obj8(
                             ]
                         )
                     )
-                multipol = vect.ensure_MultiPolygon(ops.cascaded_union(polist))
+                multipol = vect.ensure_MultiPolygon(ops.unary_union(polist))
             except:
                 pass
     f.close()

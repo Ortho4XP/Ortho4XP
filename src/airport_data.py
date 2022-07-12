@@ -587,8 +587,8 @@ class Runway:
             lon_max,
             lat_max,
         ) = prepared_polygon.context.envelope.bounds
-        x_min, y_min = GEO.wgs84_to_orthogrid(lat_max, lon_min, zl)
-        x_max, y_max = GEO.wgs84_to_orthogrid(lat_min, lon_max, zl)
+        x_min, y_min = geo.wgs84_to_orthogrid(lat_max, lon_min, zl)
+        x_max, y_max = geo.wgs84_to_orthogrid(lat_min, lon_max, zl)
 
         return filter(
             lambda tile: prepared_polygon.intersects(tile.polygon()),

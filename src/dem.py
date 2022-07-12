@@ -25,7 +25,7 @@ except ImportError:
         import gdal
 
         has_gdal = True
-    except ImportError:
+    except ImportError as e:
         pass
 
 

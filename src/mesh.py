@@ -454,7 +454,7 @@ def extract_mesh_to_obj(
                 textured_nodes_inv[n1] = len_textured_nodes
                 textured_nodes[len_textured_nodes] = n1
                 nodes_st_coord[len_textured_nodes] = geo.st_coord(
-                    lat1, lon1, til_x_left, til_y_top, zoomlevel, provider_code
+                    lat1, lon1, til_x_left, til_y_top, zoomlevel
                 )
             n1new = textured_nodes_inv[n1]
             if n2 not in textured_nodes_inv:
@@ -462,7 +462,7 @@ def extract_mesh_to_obj(
                 textured_nodes_inv[n2] = len_textured_nodes
                 textured_nodes[len_textured_nodes] = n2
                 nodes_st_coord[len_textured_nodes] = geo.st_coord(
-                    lat2, lon2, til_x_left, til_y_top, zoomlevel, provider_code
+                    lat2, lon2, til_x_left, til_y_top, zoomlevel
                 )
             n2new = textured_nodes_inv[n2]
             if n3 not in textured_nodes_inv:
@@ -470,7 +470,7 @@ def extract_mesh_to_obj(
                 textured_nodes_inv[n3] = len_textured_nodes
                 textured_nodes[len_textured_nodes] = n3
                 nodes_st_coord[len_textured_nodes] = geo.st_coord(
-                    lat3, lon3, til_x_left, til_y_top, zoomlevel, provider_code
+                    lat3, lon3, til_x_left, til_y_top, zoomlevel
                 )
             n3new = textured_nodes_inv[n3]
             dico_new_tri[len_dico_new_tri] = (n1new, n2new, n3new)

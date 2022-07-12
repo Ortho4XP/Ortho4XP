@@ -724,7 +724,7 @@ def OSM_to_MultiPolygon(osm_layer, lat, lon, filter=None):
                 )
                 for nodelist in osm_layer.dicosmr[relid]["outer"]
             ]
-            multiout = ops.cascaded_union(
+            multiout = ops.unary_union(
                 [geom for geom in multiout if geom.is_valid]
             )
             multiin = [
@@ -740,7 +740,7 @@ def OSM_to_MultiPolygon(osm_layer, lat, lon, filter=None):
                 )
                 for nodelist in osm_layer.dicosmr[relid]["inner"]
             ]
-            multiin = ops.cascaded_union(
+            multiin = ops.unary_union(
                 [geom for geom in multiin if geom.is_valid]
             )
         except Exception as e:
